@@ -1,0 +1,5 @@
+{
+  "projectRoot": "/path/to/project",
+  "makeContent": "{\"format\":\"godot.make\",\"version\":1,\"actions\":[]}",
+  "behaviorContent": "{\"format\":\"godot.behavior\",\"version\":1,\"actions\":[{\"type\":\"wait\",\"ms\":500}],\"assertions\":[{\"type\":\"frames_min\",\"value\":1}]}"
+}

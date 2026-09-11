@@ -1,0 +1,22 @@
+{
+  "format": "godot.behavior",
+  "version": 1,
+  "name": "GJM acceptance test",
+  "actions": [
+    { "type": "wait", "ms": 500 },
+    { "type": "key_press", "key": "ENTER", "durationMs": 100 },
+    { "type": "screenshot", "name": "after_enter" },
+    { "type": "wait", "ms": 500 }
+  ],
+  "assertions": [
+    { "type": "frames_min", "value": 1 },
+    { "type": "checkpoint", "name": "after_enter" },
+    { "type": "file_exists", "path": "main.tscn" },
+    { "type": "stdout_contains", "value": "GJM" },
+    { "type": "stderr_not_contains", "value": "SCRIPT ERROR" }
+  ],
+  "capture": {
+    "fps": 30,
+    "outputName": "gjm-result.mp4"
+  }
+}

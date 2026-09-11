@@ -1,0 +1,30 @@
+{
+  "name": "godot-j-mcp",
+  "version": "2.5.0",
+  "description": "Godot-J-MCP (GJM): MCP v2 server with declarative Godot build, validation, AI repair loops, runtime behavior automation, assertions, snapshots, artifacts, MP4 capture, and MCP tool metadata.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "gjm": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/index.js",
+    "mcp:test": "node tests/mcp-smoke.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.0.0",
+    "zod": "4.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.2",
+    "tsx": "^4.20.0",
+    "typescript": "5.9.2",
+    "@modelcontextprotocol/client": "2.0.0"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "format": "godot.make",
+  "version": 1,
+  "name": "GJM Example",
+  "actions": [
+    { "type": "directory", "path": "scripts" },
+    {
+      "type": "script",
+      "path": "scripts/main.gd",
+      "content": "extends Node2D\n\nfunc _ready():\n    print(\"GJM test game started\")\n"
+    },
+    {
+      "type": "scene",
+      "path": "main.tscn",
+      "script": "res://scripts/main.gd",
+      "root": { "name": "Main", "type": "Node2D" },
+      "nodes": [
+        { "name": "Label", "type": "Label", "properties": { "text": "Hello GJM" } }
+      ]
+    },
+    {
+      "type": "project_setting",
+      "section": "application",
+      "key": "run/main_scene",
+      "value": "res://main.tscn"
+    }
+  ]
+}

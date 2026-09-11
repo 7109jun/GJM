@@ -1,0 +1,5 @@
+{
+  "kind": "make",
+  "sourceFile": "/path/from-mcp-upload/godot.make.json",
+  "destination": "godot.make.json"
+}

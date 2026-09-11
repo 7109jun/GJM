@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "gjm": {
+      "command": "node",
+      "args": [
+        "/ABSOLUTE/PATH/TO/Godot-J-MCP-2.5.0/dist/index.js"
+      ],
+      "env": {
+        "GODOT_BIN": "godot",
+        "FFMPEG_BIN": "ffmpeg"
+      }
+    }
+  }
+}
