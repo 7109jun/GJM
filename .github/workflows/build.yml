@@ -5,9 +5,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "Godot-J-MCP-GitHub-2.5.0/**"
-      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -31,11 +28,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup GitHub Pages
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Prepare site
+      - name: Prepare website
         run: |
+          rm -rf _site
           mkdir -p _site
           cp -r Godot-J-MCP-GitHub-2.5.0/. _site/
 
@@ -44,7 +42,7 @@ jobs:
         with:
           path: _site
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
 ```
