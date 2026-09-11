@@ -1,3 +1,4 @@
+```yaml
 name: Deploy GJM Pages
 
 on:
@@ -24,24 +25,25 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Prepare website
+        shell: bash
         run: |
           rm -rf _site
           mkdir -p _site
-          cp -r Godot-J-MCP-GitHub-2.5.0/. _site/
+          cp -R "Godot-J-MCP-GitHub-2.5.0/." "_site/"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: _site
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 ```
