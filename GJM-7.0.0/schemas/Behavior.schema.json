@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GJM Behavior.json",
+  "type": "object",
+  "required": ["format", "version", "actions"],
+  "properties": {
+    "format": {"const": "godot.behavior"},
+    "version": {"type": "integer", "minimum": 1},
+    "actions": {"type": "array"},
+    "assertions": {"type": "array"},
+    "capture": {"type": "object"}
+  }
+}

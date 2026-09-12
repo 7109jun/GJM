@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GJM godot.make.json",
+  "type": "object",
+  "required": ["format", "version", "actions"],
+  "properties": {
+    "format": {"const": "godot.make"},
+    "version": {"type": "integer", "minimum": 1},
+    "name": {"type": "string"},
+    "description": {"type": "string"},
+    "actions": {
+      "type": "array",
+      "items": {"type": "object", "required": ["type"], "properties": {"type": {"type": "string", "enum": ["directory","file","script","shader","resource","asset_base64","copy","project_setting","input_action","autoload","template","scene","scene_raw","feature", "godot_script"]}, "kind": {"type": "string"}, "scene": {"type": "string"}, "path": {"type": "string"}, "name": {"type": "string"}, "options": {"type": "object"}}}
+    }
+  }
+}

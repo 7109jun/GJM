@@ -1,0 +1,74 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { resolveGodot, runProcess } from './process.js';
+let cachedMajor;
+export async function godotVersion() {
+    const result = await runProcess(resolveGodot(), ['--version'], { timeoutMs: 15000 });
+    if (result.code !== 0)
+        throw new Error(`Godot version check failed: ${result.stderr || result.stdout}`);
+    const version = result.stdout.trim().split(/\s+/)[0];
+    const major = Number.parseInt(version.split('.')[0], 10);
+    if (!Number.isInteger(major))
+        throw new Error(`Unable to parse Godot version: ${version}`);
+    cachedMajor = major;
+    return { major, version };
+}
+export async function getGodotMajor() {
+    if (cachedMajor !== undefined)
+        return cachedMajor;
+    return (await godotVersion()).major;
+}
+export function runGodot(args, cwd, timeoutMs, env) {
+    const godot = resolveGodot();
+    const display = process.env.DISPLAY;
+    let displayReady = false;
+    if (display && process.platform === 'linux') {
+        const match = display.match(/^:(\d+)/);
+        displayReady = !!match && fs.existsSync(`/tmp/.X11-unix/X${match[1]}`);
+    }
+    else if (display) {
+        displayReady = true;
+    }
+    if (process.platform === 'linux' && process.env.GJM_XVFB !== '0' && !displayReady) {
+        return runProcess('xvfb-run', ['-a', godot, ...args], { cwd, timeoutMs, env });
+    }
+    return runProcess(godot, args, { cwd, timeoutMs, env });
+}
+function hasGodotDiagnosticFailure(result) {
+    const s = `${result.stdout}\n${result.stderr}`;
+    return /SCRIPT ERROR:|Parse Error:|Compile Error:|Failed loading resource:|Cannot open file.*\.(tscn|tres|gd|cs)/.test(s);
+}
+export async function validateGodotProject(projectRoot) {
+    const major = await getGodotMajor();
+    const args = major >= 4
+        ? ['--headless', '--path', projectRoot, '--editor', '--quit']
+        : ['--path', projectRoot, '--editor', '--quit'];
+    const result = await runGodot(args, projectRoot, 120000);
+    if (result.code === 0 && hasGodotDiagnosticFailure(result))
+        return { ...result, code: 1 };
+    return result;
+}
+export function godotOutputIndicatesFailure(result) {
+    return hasGodotDiagnosticFailure(result);
+}
+export async function runGodotProject(projectRoot, scene, timeoutMs = 30000) {
+    const args = ['--path', projectRoot];
+    if (scene) {
+        if ((await getGodotMajor()) >= 4)
+            args.push('--scene', scene);
+        else
+            args.push(scene);
+    }
+    return runGodot(args, projectRoot, timeoutMs);
+}
+export function gjmErrorCode(result) {
+    if (result.timedOut || result.code === -2)
+        return 'GJM-E302';
+    if (result.code !== 0)
+        return 'GJM-E201';
+    return 'GJM-OK';
+}
+export function projectPath(root, value) {
+    return path.resolve(root, value);
+}
+//# sourceMappingURL=godot.js.map

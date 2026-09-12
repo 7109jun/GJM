@@ -1,0 +1,36 @@
+{
+  "name": "godot-j-mcp",
+  "version": "7.0.0",
+  "description": "Godot-J-MCP (GJM) 7.0.0: universal AI-first Godot automation over MCP.",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "bin": {
+    "gjm": "dist/src/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "README-NETWORK.md",
+    "docs",
+    "schemas",
+    "examples",
+    "tests",
+    "MCP-CONFORMANCE.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/index.js",
+    "mcp:test": "node tests/mcp-native-smoke.mjs",
+    "core:test": "node tests/core-e2e.mjs",
+    "runtime:test": "tsc -p tsconfig.core.json && node tests/runtime-bridge.mjs",
+    "studio:test": "node tests/mcp-feature-smoke2.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

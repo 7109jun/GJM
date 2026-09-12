@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GJM result",
+  "type": "object",
+  "required": ["ok", "code"],
+  "properties": {
+    "ok": {"type": "boolean"},
+    "code": {"type": "string"},
+    "phase": {"type": "string"},
+    "message": {"type": "string"}
+  }
+}
